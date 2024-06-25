@@ -5,32 +5,26 @@ using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AWS_Provisioning
 {
     public partial class MainForm : Form
     {
+        AWSLibrary test = new AWSLibrary();
+
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private AmazonIoTClient AWSClientAuthenication()
-        {
-            //var awsCredentials = new Amazon.Runtime.BasicAWSCredentials(tbAWSAccessKeyID.Text, tbAWSSecretAccessKey.Text);
-            //var awsRegion = RegionEndpoint.GetBySystemName("ap-southeast-2");
-            //AmazonIoTClient client = new AmazonIoTClient(awsCredentials, awsRegion);
-
-            // Use default credentials 
-            var config = new Amazon.IoT.AmazonIoTConfig();
-            AmazonIoTClient client = new AmazonIoTClient(config);
-            return (client);
-        }
-
         private async void bCreateThing_Click(object sender, EventArgs e)
         {
-            AmazonIoTClient client = new MainForm().AWSClientAuthenication();
+            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
+
+            tbOutputLog.AppendText("Connected to: " + client.Config.RegionEndpoint.ToString() + "\r\n");
 
             var request = new Amazon.IoT.Model.CreateThingRequest();
             var response = new CreateThingResponse();
@@ -70,11 +64,13 @@ namespace AWS_Provisioning
             reqAttachThing.ThingName = tbThingName.Text;
             AttachThingPrincipalResponse resAttachThing = await client.AttachThingPrincipalAsync(reqAttachThing);
             tbOutputLog.AppendText("Attach Certificate to Thing: " + resAttachThing.HttpStatusCode.ToString() + "\r\n");
+
+            client.Dispose();
         }
 
         private async void bLoadThingTypes_ClickAsync(object sender, EventArgs e)
         {
-            AmazonIoTClient client = new MainForm().AWSClientAuthenication();
+            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
 
             // Get Thing Types
             var reqListThingTypes = new Amazon.IoT.Model.ListThingTypesRequest();
@@ -90,30 +86,44 @@ namespace AWS_Provisioning
                 cbThingTypes.Items.Add(item.ThingTypeName);
             }
             cbThingTypes.SelectedIndex = 0;
+
+            client.Dispose();
         }
 
         private async void bLoadGroups_Click(object sender, EventArgs e)
         {
-            AmazonIoTClient client = new MainForm().AWSClientAuthenication();
+            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
 
             // Get Thing Groups
             var reqListThingGroups = new Amazon.IoT.Model.ListThingGroupsRequest();
             reqListThingGroups.MaxResults = 100;
-            ListThingGroupsResponse resListThingGroups = await client.ListThingGroupsAsync(reqListThingGroups);
-            tbOutputLog.AppendText("Found " + resListThingGroups.ThingGroups.Count.ToString() + " Thing Groups:\r\n");
 
-            // Populate ComboBox
-            cbThingGroups.Items.Clear();
-            foreach (var item in resListThingGroups.ThingGroups)
+            try
             {
-                tbOutputLog.AppendText(item.GroupName + "\r\n");
-                cbThingGroups.Items.Add(item.GroupName);
+                ListThingGroupsResponse resListThingGroups = await client.ListThingGroupsAsync(reqListThingGroups);
+
+                tbOutputLog.AppendText("Found " + resListThingGroups.ThingGroups.Count.ToString() + " Thing Groups:\r\n");
+
+                // Populate ComboBox
+                cbThingGroups.Items.Clear();
+                foreach (var item in resListThingGroups.ThingGroups)
+                {
+                    tbOutputLog.AppendText(item.GroupName + "\r\n");
+                    cbThingGroups.Items.Add(item.GroupName);
+                }
+                cbThingGroups.SelectedIndex = 0;
             }
-            cbThingGroups.SelectedIndex = 0;
+            catch (Exception ex)
+            {
+                tbOutputLog.AppendText(ex.Message);
+            }
+
+
+            client.Dispose();
         }
         private async void bLoadPolicies_Click(object sender, EventArgs e)
         {
-            AmazonIoTClient client = new MainForm().AWSClientAuthenication();
+            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
 
             // Get Security Policies
             var reqListPolicies = new Amazon.IoT.Model.ListPoliciesRequest();
@@ -128,6 +138,30 @@ namespace AWS_Provisioning
                 cbPolicies.Items.Add(item.PolicyName);
             }
             cbPolicies.SelectedIndex = 0;
+
+            client.Dispose();
+        }
+
+        private void cbAWSProfile_Click(object sender, EventArgs e)
+        {
+            cbAWSProfile.Items.Clear();
+
+            var chain = new CredentialProfileStoreChain();
+
+            List<CredentialProfile> Profiles = new List<CredentialProfile>();
+
+            Profiles = chain.ListProfiles();
+
+            foreach (CredentialProfile profile in Profiles)
+            {
+                cbAWSProfile.Items.Add(profile.Name);
+                tbOutputLog.AppendText("Profile: " + profile.Name + " Type:" + profile.EndpointUrl + "\r\n");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
         }
     }
 }

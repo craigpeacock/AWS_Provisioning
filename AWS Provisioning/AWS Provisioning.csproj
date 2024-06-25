@@ -13,6 +13,8 @@
     <PackageReference Include="AWSSDK.IoT" Version="3.7.307.17" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.300.71" />
     <PackageReference Include="AWSSDK.SSO" Version="3.7.300.70" />
+    <PackageReference Include="AWSSDK.SSOAdmin" Version="3.7.302.91" />
+    <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.302.7" />
   </ItemGroup>
 
 </Project>

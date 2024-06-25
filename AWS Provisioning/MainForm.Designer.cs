@@ -29,35 +29,33 @@
         private void InitializeComponent()
         {
             bCreateThing = new Button();
-            gb_credentials = new GroupBox();
-            labelAWSSecretAccessKey = new Label();
-            tbAWSSecretAccessKey = new TextBox();
-            labelAWSAccessKeyID = new Label();
-            tbAWSAccessKeyID = new TextBox();
+            gbCredentials = new GroupBox();
+            labelAWSProfile = new Label();
+            cbAWSProfile = new ComboBox();
             tbOutputLog = new TextBox();
             gbLog = new GroupBox();
-            gbLoadPolicy = new GroupBox();
+            gbThing = new GroupBox();
             bLoadPolicies = new Button();
-            lSecurityPolicy = new Label();
+            labelSecurityPolicy = new Label();
             cbPolicies = new ComboBox();
             bLoadGroups = new Button();
             cbThingGroups = new ComboBox();
             bLoadThingTypes = new Button();
             cbThingTypes = new ComboBox();
-            lableThingType = new Label();
-            lableThingGroup = new Label();
+            labelThingType = new Label();
+            labelThingGroup = new Label();
             tbThingName = new TextBox();
             labelThingName = new Label();
             gbCertificates = new GroupBox();
             tbPrivateKey = new TextBox();
-            label3 = new Label();
+            labelPrivateKey = new Label();
             tbPublicKey = new TextBox();
-            label2 = new Label();
-            label1 = new Label();
+            labelPublicKey = new Label();
+            labelCertificatePEM = new Label();
             tbCertificatePem = new TextBox();
-            gb_credentials.SuspendLayout();
+            gbCredentials.SuspendLayout();
             gbLog.SuspendLayout();
-            gbLoadPolicy.SuspendLayout();
+            gbThing.SuspendLayout();
             gbCertificates.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,89 +69,73 @@
             bCreateThing.UseVisualStyleBackColor = true;
             bCreateThing.Click += bCreateThing_Click;
             // 
-            // gb_credentials
+            // gbCredentials
             // 
-            gb_credentials.Controls.Add(labelAWSSecretAccessKey);
-            gb_credentials.Controls.Add(tbAWSSecretAccessKey);
-            gb_credentials.Controls.Add(labelAWSAccessKeyID);
-            gb_credentials.Controls.Add(tbAWSAccessKeyID);
-            gb_credentials.Location = new Point(12, 12);
-            gb_credentials.Name = "gb_credentials";
-            gb_credentials.Size = new Size(503, 106);
-            gb_credentials.TabIndex = 2;
-            gb_credentials.TabStop = false;
-            gb_credentials.Text = "Credentials";
+            gbCredentials.Controls.Add(labelAWSProfile);
+            gbCredentials.Controls.Add(cbAWSProfile);
+            gbCredentials.Location = new Point(12, 12);
+            gbCredentials.Name = "gbCredentials";
+            gbCredentials.Size = new Size(503, 61);
+            gbCredentials.TabIndex = 2;
+            gbCredentials.TabStop = false;
+            gbCredentials.Text = "Credentials";
             // 
-            // labelAWSSecretAccessKey
+            // labelAWSProfile
             // 
-            labelAWSSecretAccessKey.AutoSize = true;
-            labelAWSSecretAccessKey.Location = new Point(16, 58);
-            labelAWSSecretAccessKey.Name = "labelAWSSecretAccessKey";
-            labelAWSSecretAccessKey.Size = new Size(127, 15);
-            labelAWSSecretAccessKey.TabIndex = 3;
-            labelAWSSecretAccessKey.Text = "AWS Secret Access Key";
+            labelAWSProfile.AutoSize = true;
+            labelAWSProfile.Location = new Point(18, 27);
+            labelAWSProfile.Name = "labelAWSProfile";
+            labelAWSProfile.Size = new Size(68, 15);
+            labelAWSProfile.TabIndex = 5;
+            labelAWSProfile.Text = "AWS Profile";
             // 
-            // tbAWSSecretAccessKey
+            // cbAWSProfile
             // 
-            tbAWSSecretAccessKey.Location = new Point(158, 55);
-            tbAWSSecretAccessKey.Name = "tbAWSSecretAccessKey";
-            tbAWSSecretAccessKey.Size = new Size(314, 23);
-            tbAWSSecretAccessKey.TabIndex = 2;
-            // 
-            // labelAWSAccessKeyID
-            // 
-            labelAWSAccessKeyID.AutoSize = true;
-            labelAWSAccessKeyID.Location = new Point(16, 29);
-            labelAWSAccessKeyID.Name = "labelAWSAccessKeyID";
-            labelAWSAccessKeyID.Size = new Size(106, 15);
-            labelAWSAccessKeyID.TabIndex = 1;
-            labelAWSAccessKeyID.Text = "AWS Access Key ID";
-            // 
-            // tbAWSAccessKeyID
-            // 
-            tbAWSAccessKeyID.Location = new Point(158, 26);
-            tbAWSAccessKeyID.Name = "tbAWSAccessKeyID";
-            tbAWSAccessKeyID.Size = new Size(314, 23);
-            tbAWSAccessKeyID.TabIndex = 0;
+            cbAWSProfile.FormattingEnabled = true;
+            cbAWSProfile.Location = new Point(158, 23);
+            cbAWSProfile.Name = "cbAWSProfile";
+            cbAWSProfile.Size = new Size(314, 23);
+            cbAWSProfile.TabIndex = 4;
+            cbAWSProfile.Click += cbAWSProfile_Click;
             // 
             // tbOutputLog
             // 
             tbOutputLog.Location = new Point(15, 22);
             tbOutputLog.Multiline = true;
             tbOutputLog.Name = "tbOutputLog";
-            tbOutputLog.Size = new Size(1051, 180);
+            tbOutputLog.Size = new Size(1051, 179);
             tbOutputLog.TabIndex = 3;
             // 
             // gbLog
             // 
             gbLog.Controls.Add(tbOutputLog);
-            gbLog.Location = new Point(12, 468);
+            gbLog.Location = new Point(12, 447);
             gbLog.Name = "gbLog";
-            gbLog.Size = new Size(1084, 197);
+            gbLog.Size = new Size(1084, 218);
             gbLog.TabIndex = 4;
             gbLog.TabStop = false;
             gbLog.Text = "Log";
             // 
-            // gbLoadPolicy
+            // gbThing
             // 
-            gbLoadPolicy.Controls.Add(bLoadPolicies);
-            gbLoadPolicy.Controls.Add(lSecurityPolicy);
-            gbLoadPolicy.Controls.Add(cbPolicies);
-            gbLoadPolicy.Controls.Add(bLoadGroups);
-            gbLoadPolicy.Controls.Add(cbThingGroups);
-            gbLoadPolicy.Controls.Add(bLoadThingTypes);
-            gbLoadPolicy.Controls.Add(cbThingTypes);
-            gbLoadPolicy.Controls.Add(lableThingType);
-            gbLoadPolicy.Controls.Add(lableThingGroup);
-            gbLoadPolicy.Controls.Add(tbThingName);
-            gbLoadPolicy.Controls.Add(labelThingName);
-            gbLoadPolicy.Controls.Add(bCreateThing);
-            gbLoadPolicy.Location = new Point(12, 124);
-            gbLoadPolicy.Name = "gbLoadPolicy";
-            gbLoadPolicy.Size = new Size(503, 338);
-            gbLoadPolicy.TabIndex = 5;
-            gbLoadPolicy.TabStop = false;
-            gbLoadPolicy.Text = "Thing";
+            gbThing.Controls.Add(bLoadPolicies);
+            gbThing.Controls.Add(labelSecurityPolicy);
+            gbThing.Controls.Add(cbPolicies);
+            gbThing.Controls.Add(bLoadGroups);
+            gbThing.Controls.Add(cbThingGroups);
+            gbThing.Controls.Add(bLoadThingTypes);
+            gbThing.Controls.Add(cbThingTypes);
+            gbThing.Controls.Add(labelThingType);
+            gbThing.Controls.Add(labelThingGroup);
+            gbThing.Controls.Add(tbThingName);
+            gbThing.Controls.Add(labelThingName);
+            gbThing.Controls.Add(bCreateThing);
+            gbThing.Location = new Point(12, 79);
+            gbThing.Name = "gbThing";
+            gbThing.Size = new Size(503, 212);
+            gbThing.TabIndex = 5;
+            gbThing.TabStop = false;
+            gbThing.Text = "Thing";
             // 
             // bLoadPolicies
             // 
@@ -165,14 +147,14 @@
             bLoadPolicies.UseVisualStyleBackColor = true;
             bLoadPolicies.Click += bLoadPolicies_Click;
             // 
-            // lSecurityPolicy
+            // labelSecurityPolicy
             // 
-            lSecurityPolicy.AutoSize = true;
-            lSecurityPolicy.Location = new Point(16, 123);
-            lSecurityPolicy.Name = "lSecurityPolicy";
-            lSecurityPolicy.Size = new Size(96, 15);
-            lSecurityPolicy.TabIndex = 12;
-            lSecurityPolicy.Text = "Certificate Policy";
+            labelSecurityPolicy.AutoSize = true;
+            labelSecurityPolicy.Location = new Point(16, 123);
+            labelSecurityPolicy.Name = "labelSecurityPolicy";
+            labelSecurityPolicy.Size = new Size(96, 15);
+            labelSecurityPolicy.TabIndex = 12;
+            labelSecurityPolicy.Text = "Certificate Policy";
             // 
             // cbPolicies
             // 
@@ -218,23 +200,23 @@
             cbThingTypes.Size = new Size(252, 23);
             cbThingTypes.TabIndex = 6;
             // 
-            // lableThingType
+            // labelThingType
             // 
-            lableThingType.AutoSize = true;
-            lableThingType.Location = new Point(15, 94);
-            lableThingType.Name = "lableThingType";
-            lableThingType.Size = new Size(64, 15);
-            lableThingType.TabIndex = 5;
-            lableThingType.Text = "Thing Type";
+            labelThingType.AutoSize = true;
+            labelThingType.Location = new Point(15, 94);
+            labelThingType.Name = "labelThingType";
+            labelThingType.Size = new Size(64, 15);
+            labelThingType.TabIndex = 5;
+            labelThingType.Text = "Thing Type";
             // 
-            // lableThingGroup
+            // labelThingGroup
             // 
-            lableThingGroup.AutoSize = true;
-            lableThingGroup.Location = new Point(16, 66);
-            lableThingGroup.Name = "lableThingGroup";
-            lableThingGroup.Size = new Size(73, 15);
-            lableThingGroup.TabIndex = 3;
-            lableThingGroup.Text = "Thing Group";
+            labelThingGroup.AutoSize = true;
+            labelThingGroup.Location = new Point(16, 66);
+            labelThingGroup.Name = "labelThingGroup";
+            labelThingGroup.Size = new Size(73, 15);
+            labelThingGroup.TabIndex = 3;
+            labelThingGroup.Text = "Thing Group";
             // 
             // tbThingName
             // 
@@ -255,14 +237,14 @@
             // gbCertificates
             // 
             gbCertificates.Controls.Add(tbPrivateKey);
-            gbCertificates.Controls.Add(label3);
+            gbCertificates.Controls.Add(labelPrivateKey);
             gbCertificates.Controls.Add(tbPublicKey);
-            gbCertificates.Controls.Add(label2);
-            gbCertificates.Controls.Add(label1);
+            gbCertificates.Controls.Add(labelPublicKey);
+            gbCertificates.Controls.Add(labelCertificatePEM);
             gbCertificates.Controls.Add(tbCertificatePem);
             gbCertificates.Location = new Point(521, 12);
             gbCertificates.Name = "gbCertificates";
-            gbCertificates.Size = new Size(575, 450);
+            gbCertificates.Size = new Size(575, 429);
             gbCertificates.TabIndex = 6;
             gbCertificates.TabStop = false;
             gbCertificates.Text = "Certificates";
@@ -275,14 +257,14 @@
             tbPrivateKey.Size = new Size(542, 101);
             tbPrivateKey.TabIndex = 5;
             // 
-            // label3
+            // labelPrivateKey
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(18, 292);
-            label3.Name = "label3";
-            label3.Size = new Size(65, 15);
-            label3.TabIndex = 4;
-            label3.Text = "Private Key";
+            labelPrivateKey.AutoSize = true;
+            labelPrivateKey.Location = new Point(18, 292);
+            labelPrivateKey.Name = "labelPrivateKey";
+            labelPrivateKey.Size = new Size(65, 15);
+            labelPrivateKey.TabIndex = 4;
+            labelPrivateKey.Text = "Private Key";
             // 
             // tbPublicKey
             // 
@@ -292,23 +274,23 @@
             tbPublicKey.Size = new Size(542, 101);
             tbPublicKey.TabIndex = 3;
             // 
-            // label2
+            // labelPublicKey
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(18, 160);
-            label2.Name = "label2";
-            label2.Size = new Size(62, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Public Key";
+            labelPublicKey.AutoSize = true;
+            labelPublicKey.Location = new Point(18, 160);
+            labelPublicKey.Name = "labelPublicKey";
+            labelPublicKey.Size = new Size(62, 15);
+            labelPublicKey.TabIndex = 2;
+            labelPublicKey.Text = "Public Key";
             // 
-            // label1
+            // labelCertificatePEM
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(18, 26);
-            label1.Name = "label1";
-            label1.Size = new Size(88, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Certificate.pem";
+            labelCertificatePEM.AutoSize = true;
+            labelCertificatePEM.Location = new Point(18, 26);
+            labelCertificatePEM.Name = "labelCertificatePEM";
+            labelCertificatePEM.Size = new Size(88, 15);
+            labelCertificatePEM.TabIndex = 1;
+            labelCertificatePEM.Text = "Certificate.pem";
             // 
             // tbCertificatePem
             // 
@@ -324,17 +306,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1108, 677);
             Controls.Add(gbCertificates);
-            Controls.Add(gbLoadPolicy);
+            Controls.Add(gbThing);
             Controls.Add(gbLog);
-            Controls.Add(gb_credentials);
+            Controls.Add(gbCredentials);
             Name = "MainForm";
             Text = "Example AWS Provisioning App";
-            gb_credentials.ResumeLayout(false);
-            gb_credentials.PerformLayout();
+            gbCredentials.ResumeLayout(false);
+            gbCredentials.PerformLayout();
             gbLog.ResumeLayout(false);
             gbLog.PerformLayout();
-            gbLoadPolicy.ResumeLayout(false);
-            gbLoadPolicy.PerformLayout();
+            gbThing.ResumeLayout(false);
+            gbThing.PerformLayout();
             gbCertificates.ResumeLayout(false);
             gbCertificates.PerformLayout();
             ResumeLayout(false);
@@ -343,31 +325,29 @@
         #endregion
 
         private Button bCreateThing;
-        private GroupBox gb_credentials;
-        private Label labelAWSAccessKeyID;
-        private TextBox tbAWSAccessKeyID;
-        private Label labelAWSSecretAccessKey;
-        private TextBox tbAWSSecretAccessKey;
+        private GroupBox gbCredentials;
         private TextBox tbOutputLog;
         private GroupBox gbLog;
-        private GroupBox gbLoadPolicy;
+        private GroupBox gbThing;
         private Label labelThingName;
         private TextBox tbThingName;
-        private Label lableThingGroup;
-        private Label lableThingType;
+        private Label labelThingGroup;
+        private Label labelThingType;
         private Button bLoadThingTypes;
         private ComboBox cbThingTypes;
         private Button bLoadGroups;
         private ComboBox cbThingGroups;
         private Button bLoadPolicies;
-        private Label lSecurityPolicy;
+        private Label labelSecurityPolicy;
         private ComboBox cbPolicies;
         private GroupBox gbCertificates;
         private TextBox tbPublicKey;
-        private Label label2;
-        private Label label1;
+        private Label labelPublicKey;
+        private Label labelCertificatePEM;
         private TextBox tbCertificatePem;
         private TextBox tbPrivateKey;
-        private Label label3;
+        private Label labelPrivateKey;
+        private Label labelAWSProfile;
+        private ComboBox cbAWSProfile;
     }
 }
