@@ -30,6 +30,8 @@ namespace AWS_Provisioning
                 AWSCredentialsFactory.TryGetAWSCredentials(basicProfile, sharedFile, out awsCredentials))
             {
                 labelAWSRegionField.Text = basicProfile.Region.ToString();
+                labelAWSAccountField.Text = "Querying";
+                labelAWSARNField.Text = "Querying";
 
                 var ssoCredentials = awsCredentials as SSOAWSCredentials;
                 if (ssoCredentials != null)
