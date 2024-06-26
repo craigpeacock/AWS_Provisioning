@@ -30,6 +30,12 @@
         {
             bCreateThing = new Button();
             gbCredentials = new GroupBox();
+            labelAWSARNField = new Label();
+            labelAWSARN = new Label();
+            labelAWSAccount = new Label();
+            labelAWSAccountField = new Label();
+            labelAWSRegionField = new Label();
+            labelAWSRegion = new Label();
             labelAWSProfile = new Label();
             cbAWSProfile = new ComboBox();
             tbOutputLog = new TextBox();
@@ -71,14 +77,71 @@
             // 
             // gbCredentials
             // 
+            gbCredentials.Controls.Add(labelAWSARNField);
+            gbCredentials.Controls.Add(labelAWSARN);
+            gbCredentials.Controls.Add(labelAWSAccount);
+            gbCredentials.Controls.Add(labelAWSAccountField);
+            gbCredentials.Controls.Add(labelAWSRegionField);
+            gbCredentials.Controls.Add(labelAWSRegion);
             gbCredentials.Controls.Add(labelAWSProfile);
             gbCredentials.Controls.Add(cbAWSProfile);
             gbCredentials.Location = new Point(12, 12);
             gbCredentials.Name = "gbCredentials";
-            gbCredentials.Size = new Size(503, 61);
+            gbCredentials.Size = new Size(503, 135);
             gbCredentials.TabIndex = 2;
             gbCredentials.TabStop = false;
             gbCredentials.Text = "Credentials";
+            // 
+            // labelAWSARNField
+            // 
+            labelAWSARNField.Location = new Point(92, 104);
+            labelAWSARNField.Name = "labelAWSARNField";
+            labelAWSARNField.Size = new Size(399, 15);
+            labelAWSARNField.TabIndex = 12;
+            labelAWSARNField.Text = "AWS ARN";
+            // 
+            // labelAWSARN
+            // 
+            labelAWSARN.AutoSize = true;
+            labelAWSARN.Location = new Point(18, 104);
+            labelAWSARN.Name = "labelAWSARN";
+            labelAWSARN.Size = new Size(31, 15);
+            labelAWSARN.TabIndex = 11;
+            labelAWSARN.Text = "ARN";
+            // 
+            // labelAWSAccount
+            // 
+            labelAWSAccount.AutoSize = true;
+            labelAWSAccount.Location = new Point(18, 80);
+            labelAWSAccount.Name = "labelAWSAccount";
+            labelAWSAccount.Size = new Size(52, 15);
+            labelAWSAccount.TabIndex = 10;
+            labelAWSAccount.Text = "Account";
+            // 
+            // labelAWSAccountField
+            // 
+            labelAWSAccountField.Location = new Point(92, 80);
+            labelAWSAccountField.Name = "labelAWSAccountField";
+            labelAWSAccountField.Size = new Size(399, 15);
+            labelAWSAccountField.TabIndex = 9;
+            labelAWSAccountField.Text = "AWS Account";
+            // 
+            // labelAWSRegionField
+            // 
+            labelAWSRegionField.Location = new Point(92, 57);
+            labelAWSRegionField.Name = "labelAWSRegionField";
+            labelAWSRegionField.Size = new Size(399, 15);
+            labelAWSRegionField.TabIndex = 7;
+            labelAWSRegionField.Text = "AWS Region";
+            // 
+            // labelAWSRegion
+            // 
+            labelAWSRegion.AutoSize = true;
+            labelAWSRegion.Location = new Point(18, 57);
+            labelAWSRegion.Name = "labelAWSRegion";
+            labelAWSRegion.Size = new Size(44, 15);
+            labelAWSRegion.TabIndex = 6;
+            labelAWSRegion.Text = "Region";
             // 
             // labelAWSProfile
             // 
@@ -92,10 +155,11 @@
             // cbAWSProfile
             // 
             cbAWSProfile.FormattingEnabled = true;
-            cbAWSProfile.Location = new Point(158, 23);
+            cbAWSProfile.Location = new Point(92, 22);
             cbAWSProfile.Name = "cbAWSProfile";
-            cbAWSProfile.Size = new Size(314, 23);
+            cbAWSProfile.Size = new Size(399, 23);
             cbAWSProfile.TabIndex = 4;
+            cbAWSProfile.SelectedIndexChanged += cbAWSProfile_SelectedIndexChanged;
             cbAWSProfile.Click += cbAWSProfile_Click;
             // 
             // tbOutputLog
@@ -130,9 +194,9 @@
             gbThing.Controls.Add(tbThingName);
             gbThing.Controls.Add(labelThingName);
             gbThing.Controls.Add(bCreateThing);
-            gbThing.Location = new Point(12, 79);
+            gbThing.Location = new Point(12, 153);
             gbThing.Name = "gbThing";
-            gbThing.Size = new Size(503, 212);
+            gbThing.Size = new Size(503, 193);
             gbThing.TabIndex = 5;
             gbThing.TabStop = false;
             gbThing.Text = "Thing";
@@ -349,5 +413,11 @@
         private Label labelPrivateKey;
         private Label labelAWSProfile;
         private ComboBox cbAWSProfile;
+        private Label labelAWSRegionField;
+        private Label labelAWSRegion;
+        private Label labelAWSAccount;
+        private Label labelAWSAccountField;
+        private Label labelAWSARNField;
+        private Label labelAWSARN;
     }
 }

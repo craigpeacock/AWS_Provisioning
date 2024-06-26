@@ -6,6 +6,7 @@ using Amazon.Runtime.CredentialManagement;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using System.Diagnostics;
+using System.Net;
 using System.Runtime.CompilerServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -18,6 +19,63 @@ namespace AWS_Provisioning
         public MainForm()
         {
             InitializeComponent();
+        }
+        
+        private async void CheckAWSCredentials()
+        {
+            CredentialProfile basicProfile;
+            AWSCredentials awsCredentials;
+            var sharedFile = new SharedCredentialsFile();
+            if (sharedFile.TryGetProfile(cbAWSProfile.Text, out basicProfile) &&
+                AWSCredentialsFactory.TryGetAWSCredentials(basicProfile, sharedFile, out awsCredentials))
+            {
+                labelAWSRegionField.Text = basicProfile.Region.ToString();
+
+                var ssoCredentials = awsCredentials as SSOAWSCredentials;
+                if (ssoCredentials != null)
+                {
+                    tbOutputLog.AppendText("Profile is SSO. Setting up SSO login\r\n");
+                    ssoCredentials.Options.ClientName = "AWS Provisioning App";
+                    ssoCredentials.Options.SsoVerificationCallback = args =>
+                    {
+                        if (MessageBox.Show("Open Web Browser to Authenticate\r\nRequest User Code " + args.UserCode, "Requesting SSO Authentication", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        { // Launch a browser window that prompts the SSO user to complete an SSO login.
+                          //  This method is only invoked if the session doesn't already have a valid SSO token.
+                          // NOTE: Process.Start might not support launching a browser on macOS or Linux. If not,
+                          //       use an appropriate mechanism on those systems instead.
+                            Process.Start(new ProcessStartInfo
+                            {
+
+                                FileName = args.VerificationUriComplete,
+                                UseShellExecute = true
+                            });
+                        }
+                    };
+                }
+                else
+                {
+                    tbOutputLog.AppendText("Profile is not SSO\r\n");
+                }
+
+                try
+                {
+                    var client = new Amazon.SecurityToken.AmazonSecurityTokenServiceClient(awsCredentials, basicProfile.Region);
+                    var callerIdRequest = new GetCallerIdentityRequest();
+                    GetCallerIdentityResponse response = await client.GetCallerIdentityAsync(callerIdRequest);
+                    {
+                        labelAWSAccountField.Text = response.Account;
+                        labelAWSARNField.Text = response.Arn;
+                    };
+                }
+                catch (Exception ex)
+                {
+                    tbOutputLog.AppendText(ex.Message);
+                }
+            }
+        }
+        private void cbAWSProfile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckAWSCredentials();
         }
 
         private async void bCreateThing_Click(object sender, EventArgs e)
@@ -157,11 +215,6 @@ namespace AWS_Provisioning
                 cbAWSProfile.Items.Add(profile.Name);
                 tbOutputLog.AppendText("Profile: " + profile.Name + " Type:" + profile.EndpointUrl + "\r\n");
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            AmazonIoTClient client = test.AWSClientAuthenication(cbAWSProfile.Text);
         }
     }
 }
